@@ -1,0 +1,27 @@
+@import '../../style/variables.scss';
+
+.char{
+    &__item{
+        display: flex;
+        margin-top: 50px;
+    }
+    &__text{
+        margin-left: 50px;
+        width: 550px;
+    }
+    &__title{
+        text-align: start;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 25px;
+    }
+    &__descr{
+        text-align: start;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+}
