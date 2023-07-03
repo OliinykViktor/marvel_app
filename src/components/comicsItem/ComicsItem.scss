@@ -1,0 +1,43 @@
+@import '../../style/variables.scss';
+
+.comics{
+ 
+    &__item{
+        display: flex;
+        margin-top: 50px;
+        img{
+        width: 293px;
+        }
+    }
+    &__title{
+        font-size: 22px;
+        font-weight: 700;
+        line-height: normal;
+        text-align: start;
+        margin-bottom: 25px;
+    }
+    &__text{
+        max-width: 550px;
+        margin-left: 50px;
+        margin-right: 127px;
+    }
+    &__descr{
+        text-align: start;
+        color: #000;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: normal;
+        span{
+            color: $main-color;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: normal;
+        }
+    }
+    &__link{
+        color: #000;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: normal;
+    }
+}
