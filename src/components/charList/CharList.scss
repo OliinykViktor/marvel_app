@@ -1,0 +1,43 @@
+@import '../../style/variables.scss';
+
+.char{
+    &__content{
+        display: grid;
+        grid-template-columns: 650px 425px;
+        column-gap: 25px;
+        margin-top: 50px;
+        align-items: start;
+    }
+    &__grid{
+        display: grid;
+        grid-template-columns: repeat(3, 200px);
+        column-gap: 20px;
+        row-gap: 31px;
+    }
+    &__item{
+        background-color: $dark;
+        width: 200px;
+        height: 318px;
+        box-shadow: 7px 7px 10px 10px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        transition: 0.3 transfrom;
+        img{
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+        &_selected{
+            box-shadow: 0 5px 20px $main-color;
+            transform: translateY(-8px);
+        }
+    }
+    &__name{
+        color: #FFF;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: normal;
+        text-transform: uppercase;
+        text-align: left;
+        padding: 15px;
+    }
+}
