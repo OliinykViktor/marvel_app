@@ -13,7 +13,7 @@ function App() {
     <div className='app'>
       <AppHeader/>
       <main>
-        <RandomChar/>
+        {/* <RandomChar/> */}
         <div className="char__content">
           <CharList/>
           <CharInfo/>

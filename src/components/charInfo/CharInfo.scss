@@ -12,6 +12,9 @@
             font-size: 22px;
             line-height: 29px;
             text-transform: uppercase;
+            a:first-child{
+                margin-bottom: 10px;
+            }
         }
         .skeleton {
             margin-top: 30px;

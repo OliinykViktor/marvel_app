@@ -1,5 +1,3 @@
-
-
 class MarvelService {
     _apiBase = 'https://gateway.marvel.com:443/v1/public/';
     _apiKey = import.meta.env.VITE_REACT_APP_MARVEL_API_KEY;
@@ -12,18 +10,18 @@ class MarvelService {
     }
 
     getAllCharacters = async() =>{
-        const res = this.getRecource(`${this._apiBase}characters?limit=9&offset=210&apikey=${this._apiKey}`);
-
+        const res = await this.getRecource(`${this._apiBase}characters?limit=9&offset=210&apikey=${this._apiKey}`);
         return res.data.results.map(this._transformCharacter);
     }
     getCharacter = async(id) => {
         const res = await this.getRecource(`${this._apiBase}/characters/${id}?apikey=${this._apiKey}`);
-        
         return this._transformCharacter(res.data.results[0]);
     }
 
     _transformCharacter = (char) => {
+        
         return {
+            id: char.id,
             name:char.name,
             descr:char.description ? char.description.slice(0, 227) + `...` : 'There is no description for this character',
             thumbnail:char.thumbnail.path+'.'+ char.thumbnail.extension,
