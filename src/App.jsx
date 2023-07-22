@@ -1,3 +1,5 @@
+import { Component } from 'react';
+
 import AppHeader from './components/appHeader/AppHeader';
 import CharInfo from './components/charInfo/CharInfo';
 import CharList from './components/charList/CharList';
@@ -7,21 +9,32 @@ import decoration from './assets/img/vision.png';
 
 import './App.css';
 
-function App() {
+class App extends Component {
+  state = {
+    selectChar: null,
+  }
 
-  return (
-    <div className='app'>
-      <AppHeader/>
-      <main>
-        {/* <RandomChar/> */}
-        <div className="char__content">
-          <CharList/>
-          <CharInfo/>
-        </div>
-        <img src={decoration} alt="decotarion" className="bg-decoration" />
-      </main>
-    </div>
-  )
+  onSelectedChar = (id) => {
+    // console.log(id);
+    this.setState({
+      selectChar:id
+    })
+  }
+  render(){
+    return (
+      <div className='app'>
+        <AppHeader/>
+        <main>
+          {/* <RandomChar/> */}
+          <div className="char__content">
+            <CharList onSelectedChar = {this.onSelectedChar}/>
+            <CharInfo charId = {this.state.selectChar}/>
+          </div>
+          <img src={decoration} alt="decotarion" className="bg-decoration" />
+        </main>
+      </div>
+    )
+  }
 }
 
 export default App
