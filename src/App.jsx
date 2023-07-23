@@ -8,6 +8,7 @@ import RandomChar from './components/randomChar/RandomChar';
 import decoration from './assets/img/vision.png';
 
 import './App.css';
+import ErrorBoundary from './components/ui/errorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -27,7 +28,9 @@ class App extends Component {
         <main>
           {/* <RandomChar/> */}
           <div className="char__content">
-            <CharList onSelectedChar = {this.onSelectedChar}/>
+            <ErrorBoundary>
+              <CharList onSelectedChar = {this.onSelectedChar}/>
+            </ErrorBoundary>
             <CharInfo charId = {this.state.selectChar}/>
           </div>
           <img src={decoration} alt="decotarion" className="bg-decoration" />
