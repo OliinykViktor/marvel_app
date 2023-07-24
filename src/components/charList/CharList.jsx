@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
@@ -12,7 +13,8 @@ class CharList extends Component {
         loading: true,
         error: false,
         newItemsLoading: false,
-        offset: 210,
+        offset: 1530,
+        charEnded: false,
     }
 
     marvelService = new MarvelService();
@@ -30,12 +32,17 @@ class CharList extends Component {
     }
 
     onCharListLoaded = (newCharList) => {
-        console.log(newCharList);
+       let end = false;
+       if (newCharList.length < 9) {
+            end = true;
+       }
+
         this.setState(({offset, charList}) => ({
             charList: [...charList, ...newCharList],
             loading: false,
             newItemsLoading: false,
             offset: offset + 9,
+            charEnded: end
         }))
     }
 
@@ -82,7 +89,7 @@ class CharList extends Component {
 
     render() {
 
-        const {error, loading, charList, offset, newItemsLoading} = this.state;
+        const {error, loading, charList, offset, newItemsLoading, charEnded} = this.state;
 
         const items = this.renderItems(charList);
 
@@ -98,14 +105,21 @@ class CharList extends Component {
 
                 <button 
                     className="button button__long button__main"
+                    style={{'display' : charEnded ? 'none' : 'block'}}
                     disabled={newItemsLoading}
-                    onClick={()=>this.onRequest(offset)}
+                    onClick={()=>this.onRequest(offset)
+                    }
                     >
                     <div className="inner">Load more</div>
                 </button>
             </div>
         )
     }
+}
+
+CharList.propTypes ={
+    charId : PropTypes.number,
+    onSelectedChar: PropTypes.func
 }
 
 export default CharList;
