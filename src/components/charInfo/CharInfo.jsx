@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
@@ -124,6 +125,11 @@ const View = ({char}) => {
             </ul>
         </>    
     )
+}
+
+CharInfo.propTypes = {
+    charId: PropTypes.number,
+    char: PropTypes.array
 }
 
 export default CharInfo;

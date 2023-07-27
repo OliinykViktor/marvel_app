@@ -23,10 +23,15 @@ class CharList extends Component {
         this.onRequest()
     }
 
+    // componentDidUpdate(prevProps){
+    //     if(prevProps.offset !== this.props.offset){
+    //         this.onRequest()
+    //     }
+    // }
+
     onRequest = (offset) => {
         this.onCharListLoading()
-        this.marvelService
-        .getAllCharacters(offset)
+        this.marvelService.getAllCharacters(offset)
         .then(this.onCharListLoaded)
         .catch(this.onError)
     }
@@ -54,22 +59,45 @@ class CharList extends Component {
 
     onError = () => {
         this.setState({
-            loading: false,
             error: true,
+            loading: false,
         })
     }
 
+    itemRef = [];
+
+    setRefs = (ref) => {
+        this.itemRef.push[ref]
+    };
+
+    focusChar = (id) => {
+        this.itemRef.forEach(elem => elem.classList.remove('char__item_selected'));
+        this.itemRef[id].classList.add('char__item_selected');
+        this.itemRef[id].focus();
+    }
+
     renderItems (arr) {
-        const items = arr.map((item) => {
+        const items = arr.map((item, i) => {
             let imgStyle = {'objectFit' : 'cover'};
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 imgStyle = {'objectFit' : 'unset'};
             }
             return (
-                <li 
+                <li tabIndex={0}
+                    ref={this.setRefs}
                     className="char__item"
                     key={item.id} 
-                    onClick={()=>this.props.onSelectedChar(item.id)}>
+                    onClick={()=>{
+                        this.props.onSelectedChar(item.id);
+                        this.focusChar(i)
+                    }}
+                    onKeyPress={(e) => {
+                        if(e.key === ' ' || e.key === 'Enter'){
+                            this.props.onSelectedChar(item.id);
+                            this.focusChar(i)
+                        }
+                    }}
+                    >
                     <img 
                         src={item.thumbnail} 
                         alt={item.name} 
@@ -92,7 +120,6 @@ class CharList extends Component {
         const {error, loading, charList, offset, newItemsLoading, charEnded} = this.state;
 
         const items = this.renderItems(charList);
-
         const spinner = loading ? <Spinner/> : null;
         const errorMessage = error ? <ErrorMessage/> : null;
         const content = !(spinner || errorMessage) ? items : null; 
@@ -107,8 +134,7 @@ class CharList extends Component {
                     className="button button__long button__main"
                     style={{'display' : charEnded ? 'none' : 'block'}}
                     disabled={newItemsLoading}
-                    onClick={()=>this.onRequest(offset)
-                    }
+                    onClick={() => this.onRequest(offset)}
                     >
                     <div className="inner">Load more</div>
                 </button>
@@ -119,6 +145,7 @@ class CharList extends Component {
 
 CharList.propTypes ={
     charId : PropTypes.number,
+    offset : PropTypes.number,
     onSelectedChar: PropTypes.func
 }
 

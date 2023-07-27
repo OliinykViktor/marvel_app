@@ -16,7 +16,6 @@ class App extends Component {
   }
 
   onSelectedChar = (id) => {
-    // console.log(id);
     this.setState({
       selectChar:id
     })
