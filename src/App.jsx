@@ -1,42 +1,38 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
 import AppHeader from './components/appHeader/AppHeader';
 import CharInfo from './components/charInfo/CharInfo';
 import CharList from './components/charList/CharList';
 import RandomChar from './components/randomChar/RandomChar';
+import ErrorBoundary from './components/ui/errorBoundary/ErrorBoundary';
 
 import decoration from './assets/img/vision.png';
 
 import './App.css';
-import ErrorBoundary from './components/ui/errorBoundary/ErrorBoundary';
 
-class App extends Component {
-  state = {
-    selectChar: null,
-  }
 
-  onSelectedChar = (id) => {
-    this.setState({
-      selectChar:id
-    })
+const App = () => {
+
+  const [ selectChar, setSelect] = useState(null)
+
+  const onSelectedChar = (id) => {
+    setSelect(id);
   }
-  render(){
     return (
       <div className='app'>
-        <AppHeader/>
+        {/* <AppHeader/> */}
         <main>
           {/* <RandomChar/> */}
           <div className="char__content">
             <ErrorBoundary>
-              <CharList onSelectedChar = {this.onSelectedChar}/>
+              <CharList onSelectedChar = {onSelectedChar}/>
             </ErrorBoundary>
-            <CharInfo charId = {this.state.selectChar}/>
+            <CharInfo charId = {selectChar}/>
           </div>
-          <img src={decoration} alt="decotarion" className="bg-decoration" />
+          <img src={decoration} alt="decotarion" className="bg-decoration"/>
         </main>
       </div>
     )
   }
-}
 
 export default App

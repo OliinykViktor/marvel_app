@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,64 +8,58 @@ import Skeleton from "../ui/skeleton/Skeleton"
 import MarvelService from '../../services/MarvelService';
 
 import './CharInfo.scss';
-class CharInfo extends Component {
-    state= {
+
+const CharInfo = (props) => {
+    
+    const [state, setState] = useState({
         char: null,
         loading: false,
         error: false,
-    }
-
-    marvelService = new MarvelService();
-
-    componentDidMount(){
-        this.updateCharacter();
-    }
-
-    componentDidUpdate(prevProps){
-        if (prevProps.charId !== this.props.charId) {
-            this.updateCharacter()
+    })
+    const marvelService = new MarvelService();
+    
+    useEffect(() => {
+        updateCharacter()
+    },[props.charId])
+    
+    const updateCharacter = () => {
+        if (!props.charId) {
+            return;
         }
+        onCharLoading();
+        marvelService
+        .getCharacter(props.charId)
+        .then(onCharLoaded)
+        .catch(onLoadError)
     }
-
-    onCharLoaded = (char) => {
-        this.setState({
+    const onCharLoaded = (char) => {
+        setState({
+            ...state,
             char,
             loading: false,
         })
     }
     
-    onCharLoading = () => {
-        this.setState({
+    const onCharLoading = () => {
+        setState({
+            ...state,
             loading: true,
         })
     }
     
-    onLoadError = () => {
-        this.setState({
+    const onLoadError = () => {
+        setState({
+            ...state,
             loading:false,
             error: true,
         })
     }
     
-    updateCharacter = () => {
-        const {charId} = this.props;
-        if (!charId) {
-            return;
-        }
-        this.onCharLoading();
-        this.marvelService
-        .getCharacter(charId)
-        .then(this.onCharLoaded)
-        .catch(this.onLoadError)
-    }
 
-    render(){
-        const {char, loading, error} = this.state;
-
-        const skeleton = char || loading || error ? null : <Skeleton/>;
-        const errorMessage = error ? <ErrorMessage/> : null;
-        const spinner = loading ? <Spinner/> : null;
-        const content = !(errorMessage || spinner || !char) ? <View char={char}/> : null
+        const skeleton = state.char || state.loading || state.error ? null : <Skeleton/>;
+        const errorMessage = state.error ? <ErrorMessage/> : null;
+        const spinner = state.loading ? <Spinner/> : null;
+        const content = !(errorMessage || spinner || !state.char) ? <View char={state.char}/> : null
         return (
             <div className="char__info">
                 {skeleton}
@@ -75,20 +69,19 @@ class CharInfo extends Component {
             </div>
         );
     }
-}
 
 const View = ({char}) => {
 
-    const {name, descr, thumbnail, wiki, homepage, comics} = char;
-
     let imgStyle = {'objectFit' : 'cover'};
-    if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+    if (char.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
         imgStyle = {'objectFit' : 'unset'};
     }
+    // console.log(char.char);
 
     const elemComics = () => {
-        comics.length = 10;
-        return comics.map((elem) => (
+        // console.log(char.comics.length);
+        char.comics.length = 10;
+        return char.comics.map((elem) => (
                 <>
                     <li className="char__comics-item"
                         key={uuidv4()}>
@@ -101,26 +94,26 @@ const View = ({char}) => {
     return(
         <>
             <div className="char__basics">
-                <img src={thumbnail} alt={name} style={imgStyle}/>
+                <img src={char.thumbnail} alt={char.name} style={imgStyle}/>
                 <div>
-                    <div className="char__info-name">{name}</div>
+                    <div className="char__info-name">{char.name}</div>
                     <div className="char__btns">
-                        <a href={homepage} className="button button__main">
+                        <a href={char.homepage} className="button button__main">
                             <div className="inner">homepage</div>
                         </a>
-                        <a href={wiki} className="button button__secondary">
+                        <a href={char.wiki} className="button button__secondary">
                             <div className="inner">Wiki</div>
                         </a>
                     </div>
                 </div>
             </div>
             <div className="char__descr">
-                {descr}
+                {char.descr}
             </div>
             <div className="char__comics">Comics:</div>
             <ul className="char__comics-list">
             
-                {comics.length == 0 ? (<div className="char__no-comics">There is no comics with this character</div>) : (elemComics())}
+                {char.comics.length == 0 ? (<div className="char__no-comics">There is no comics with this character</div>) : (elemComics())}
                 
             </ul>
         </>    
