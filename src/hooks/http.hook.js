@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 
 const useHttp = () => {
     const [loading, setLoading] = useState(false);
-    const [msgError, setMsgError] = useState(false);
+    const [error, setError] = useState(null);
 
     const reguest = useCallback(async (url, method = 'GET', body = null, headers = { 'Content-Type': 'application/json' }) => {
         setLoading(true);
@@ -14,18 +14,19 @@ const useHttp = () => {
             }
 
             const data = await response.json();
-            setLoading(false)
-            return data
-        } catch (error) {
+
             setLoading(false);
-            setMsgError(error.message);
-            throw error;
+            return data;
+        } catch (e) {
+            setLoading(false);
+            setError(e.message);
+            throw e;
         }
     }, [])
 
-    const clearError = useCallback(() => setMsgError(null), [])
+    const clearError = useCallback(() => setError(null), [])
     return {
-        loading, msgError, reguest, clearError
+        loading, error, reguest, clearError
     };
 };
 
