@@ -20,9 +20,9 @@ const App = () => {
   }
     return (
       <div className='app'>
-        {/* <AppHeader/> */}
+        <AppHeader/>
         <main>
-          {/* <RandomChar/> */}
+          <RandomChar/>
           <div className="char__content">
             <ErrorBoundary>
               <CharList onSelectedChar = {onSelectedChar}/>

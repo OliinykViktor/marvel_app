@@ -17,6 +17,7 @@ const CharList = (props) => {
         charEnded: false,
     })
 
+
     const marvelService = new MarvelService();
 
     useEffect(() =>{
