@@ -2,41 +2,78 @@ import useHttp from "../hooks/http.hook";
 
 const useMarvelService = () => {
 
-    const {loading, error, reguest, clearError} = useHttp();
-    
+    const { loading, error, reguest, clearError } = useHttp();
+
     const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
     const _apiKey = import.meta.env.VITE_REACT_APP_MARVEL_API_KEY;
     const _baseOffSet = 210;
 
-    const getAllCharacters = async( offset = _baseOffSet) => {
+    const getAllCharacters = async (offset = _baseOffSet) => {
         const res = await reguest(`${_apiBase}characters?limit=9&offset=${offset}&apikey=${_apiKey}`);
         return res.data.results.map(_transformCharacter);
     }
-    
-    const getCharacter = async(id) => {
+
+    const getCharacter = async (id) => {
         const res = await reguest(`${_apiBase}/characters/${id}?apikey=${_apiKey}`);
         return _transformCharacter(res.data.results[0]);
     }
 
     const _transformCharacter = (char) => {
-        
+
         return {
             id: char.id,
-            name:char.name,
-            descr:char.description ? char.description.slice(0, 227) + `...` : 'There is no description for this character',
-            thumbnail:char.thumbnail.path+'.'+ char.thumbnail.extension,
-            homepage:char.urls[0].url,
-            wiki:char.urls[1].url,
+            name: char.name,
+            descr: char.description 
+                ?char.description.slice(0, 227) 
+                +`...` 
+                :'There is no description for this character',
+            thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
+            homepage: char.urls[0].url,
+            wiki: char.urls[1].url,
             comics: char.comics.items,
         }
     }
 
+    const getAllComics = async () => {
+        const res = await reguest(`${_apiBase}comics?limit=8&apikey=${_apiKey}`);
+        return res.data.results.map(_transformComic);
+    }
+
+    const getComic = async(id) => {
+        const res = await reguest(`${_apiBase}comics/${id}?apikey=${_apiKey}`);
+        return _transformComic(res.data.results[0])
+    }
+
+    const _transformComic = (comic) => {
+
+        return {
+            id: comic.id,
+            title: comic.title,
+            description: comic.description
+                ? `${comic.description}`
+                : "There is no description",
+            pageCount: comic.pageCount
+                ? `${comic.pageCount}`
+                : "There is no information on the number of pages",
+            price: comic.price[0].price
+                ? `${comic.price[0].price}`
+                : "not available",
+            thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
+            language: comic.twxtObjects[0]
+                ?.language || "en-us",
+
+        }
+    }
+
     return {
-        loading, 
-        error, 
-        clearError, 
-        getAllCharacters, 
-        getCharacter}
+        loading,
+        error,
+        clearError,
+        getAllCharacters,
+        getCharacter,
+        getAllComics,
+        getComic
+    }
 }
 
 export default useMarvelService
