@@ -6,9 +6,10 @@ const useMarvelService = () => {
 
     const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
     const _apiKey = import.meta.env.VITE_REACT_APP_MARVEL_API_KEY;
-    const _baseOffSet = 210;
+    const _baseOffSetChar = 210;
+    const _baseOffSetComics = 510;
 
-    const getAllCharacters = async (offset = _baseOffSet) => {
+    const getAllCharacters = async (offset = _baseOffSetChar) => {
         const res = await reguest(`${_apiBase}characters?limit=9&offset=${offset}&apikey=${_apiKey}`);
         return res.data.results.map(_transformCharacter);
     }
@@ -34,8 +35,8 @@ const useMarvelService = () => {
         }
     }
 
-    const getAllComics = async () => {
-        const res = await reguest(`${_apiBase}comics?limit=8&apikey=${_apiKey}`);
+    const getAllComics = async (offset = _baseOffSetComics) => {
+        const res = await reguest(`${_apiBase}comics?limit=8&offset=${offset}&apikey=${_apiKey}`);
         return res.data.results.map(_transformComic);
     }
 
@@ -55,12 +56,10 @@ const useMarvelService = () => {
             pageCount: comic.pageCount
                 ? `${comic.pageCount}`
                 : "There is no information on the number of pages",
-            price: comic.price[0].price
-                ? `${comic.price[0].price}`
-                : "not available",
+            price: comic.prices[0].price,
             thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
-            language: comic.twxtObjects[0]
-                ?.language || "en-us",
+                // language: comic.twxtObjects[0]
+                //     ?.language || "en-us",
 
         }
     }
