@@ -7,7 +7,7 @@ const ComicsPage = () => {
             <AppBanner/>
             <ComicsList/>
         </>
-    );
+    )
 };
 
 export default ComicsPage;

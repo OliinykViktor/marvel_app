@@ -1,4 +1,4 @@
-import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
+import {Routes, Route, BrowserRouter as Router} from 'react-router-dom'
 
 import AppHeader from './components/appHeader/AppHeader';
 import { MainPage, ComicsPage} from './pages'
@@ -12,15 +12,11 @@ const App = () => {
         <div className='app'>
           <AppHeader/>
           <main>
-            <Switch>
-              <Route exact patch="/">
-                <MainPage/>
-              </Route>
-              <Route exact patch="/comics">
-                <ComicsPage/>
-              </Route>
-            </Switch>
-            </main>
+            <Routes>
+              <Route path="/" element={<MainPage/>}/>
+              <Route path="/comics" element={<ComicsPage/>}/>
+            </Routes>
+          </main>
         </div>
       </Router>
     )
