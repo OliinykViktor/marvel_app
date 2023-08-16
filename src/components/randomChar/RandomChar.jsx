@@ -5,12 +5,11 @@ import useMarvelService from '../../services/MarvelService';
 import './RandomChar.scss';
 import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
-// import PropTypes from 'prop-types';
 
 const RandomChar = () => {
 
     const [char, setChar] = useState(null);
-    const { loading, error, getCharacter, clearError} = useMarvelService();
+    const { loading, error, getCharacter, clearError } = useMarvelService();
 
     useEffect(() => {
         updateCharacter();
@@ -18,33 +17,33 @@ const RandomChar = () => {
         // return () => {
         //     clearInterval(timeId)
         // }
-    },[])
-    
+    }, [])
+
     const onCharLoaded = (char) => {
         setChar(char);
     }
 
-    const updateCharacter = () =>{
+    const updateCharacter = () => {
         clearError();
-        const id = Math.floor(Math.random()*(1011400-1011000)+1011000);
+        const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         getCharacter(id)
-        .then(onCharLoaded);
+            .then(onCharLoaded);
     }
 
-        const errorMessage = error ? <ErrorMessage/> : null;
-        const spinner = loading ? <Spinner/> : null;
-        const content = !(loading || errorMessage || !char) ? <View char={char} /> : null;
+    const errorMessage = error ? <ErrorMessage /> : null;
+    const spinner = loading ? <Spinner /> : null;
+    const content = !(loading || errorMessage || !char) ? <View char={char} /> : null;
 
     return (
-        <div className="randomchar">
-            {errorMessage}
-            {spinner}
-            {content}
+        <div className="randomchar">      
+                    {errorMessage}
+                    {spinner}
+                    {content}
             <div className="randomchar__static">
                 <div>
                     <p className="randomchar__title">
                         Random character from! <br />
-                        Do you want to get to know him better? 
+                        Do you want to get to know him better?
                     </p>
                     <p className="randomchar__title">
                         Or choose another one
@@ -57,19 +56,19 @@ const RandomChar = () => {
             </div>
         </div>
     );
-    
+
 }
 
-const View = ({char}) =>{
-    const {name, descr, thumbnail, homepage, wiki} = char;
-    let imgStyle = {'objectFit' : 'cover'};
-    if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'){
-        imgStyle = {'objectFit' : 'contain'}
+const View = ({ char }) => {
+    const { name, descr, thumbnail, homepage, wiki } = char;
+    let imgStyle = { 'objectFit': 'cover' };
+    if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+        imgStyle = { 'objectFit': 'contain' }
     }
 
-    return(
+    return (
         <div className="randomchar__block">
-            <img src={thumbnail} alt={name} className="randomchar__img" style={imgStyle}/>
+            <img src={thumbnail} alt={name} className="randomchar__img" style={imgStyle} />
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">{descr}</p>
@@ -80,10 +79,10 @@ const View = ({char}) =>{
                     <a href={wiki} className="button button__secondary">
                         <div className="inner">wiki</div>
                     </a>
-                </div>  
+                </div>
             </div>
         </div>
-        )
+    )
 }
 
 export default RandomChar;
