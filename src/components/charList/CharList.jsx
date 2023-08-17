@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService';
+import useSelectedItem from '../../hooks/selectedItem.hook';
 
 import './CharList.scss';
+
 const CharList = (props) => {
 
     const [state, setState] = useState({
@@ -13,9 +15,11 @@ const CharList = (props) => {
         newItemsLoading: false,
         offset: 1530,
         charEnded: false,
+        classActive: 'char__item_selected',
     })
 
     const {loading, error, getAllCharacters}  = useMarvelService();
+    const {selectedRefs, focusItem, hadleKeyDown} = useSelectedItem()
 
     useEffect((offset) =>{
         onRequest(offset, true)
@@ -44,14 +48,6 @@ const CharList = (props) => {
         })
     }
 
-    const itemRefs = useRef([]);
-
-    const focusChar = (id) => {
-        itemRefs.current.forEach(elem => elem.classList.remove('char__item_selected'));
-        itemRefs.current[id].classList.add('char__item_selected');
-        itemRefs.current[id].focus();
-    }
-
     function renderItems (arr) {
         const items = arr.map((item, i) => {
             let imgStyle = {'objectFit' : 'cover'};
@@ -60,18 +56,14 @@ const CharList = (props) => {
             }
             return (
                 <li tabIndex={0}
-                    ref={(el) => itemRefs.current[i] = el}
+                    ref={(el) => selectedRefs.current[i] = el}
                     className="char__item"
-                    key={item.id} 
+                    key={item.id}
+                    onMouseOver={()=>focusItem(i, state.classActive)}
+                    onKeyDown={(e) => hadleKeyDown(e, i, state.classActive)}
                     onClick={()=>{
                         props.onSelectedChar(item.id);
-                        focusChar(i)
-                    }}
-                    onKeyDown={(e) => {
-                        if(e.key === ' ' || e.key === 'Enter'){
-                            props.onSelectedChar(item.id);
-                            focusChar(i)
-                        }
+                        focusItem(i, state.classActive)
                     }}
                     >
                     <img 

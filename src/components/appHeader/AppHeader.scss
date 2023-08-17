@@ -24,8 +24,12 @@
             line-height: normal;
             li{
                 margin: 0 8px;
-                a:hover{
-                    color:$main-color
+                a{
+                    transition: color 0.3s ease, transform 0.3s ease;
+                    &:hover{
+                        color:$main-color;
+                        transform: translateY(-5px);
+                    }
                 }
             }
         }

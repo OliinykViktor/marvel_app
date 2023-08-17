@@ -29,6 +29,7 @@
         &_selected{
             box-shadow: 0 5px 20px $main-color;
             transform: translateY(-8px);
+            animation: selected 500ms linear 1 forwards
         }
     }
     &__name{
