@@ -1,4 +1,4 @@
-import MainPage from "./mainPage";
+import CharPage from "./CharPage";
 import ComicsPage from "./comicsPage";
 
-export {MainPage, ComicsPage}
+export {CharPage, ComicsPage}

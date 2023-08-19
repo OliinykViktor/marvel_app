@@ -1,24 +1,32 @@
-import {Routes, Route, BrowserRouter as Router} from 'react-router-dom'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
 import AppHeader from './components/appHeader/AppHeader';
-import { MainPage, ComicsPage} from './pages'
+import ErrorPage from './pages/errorPage'
+import { CharPage, ComicsPage} from './pages'
 
 import './App.css';
 
 const App = () => {
+  const routes = createBrowserRouter([
+    {
+      path:'/',
+      Component: AppHeader,
+      errorElement:<ErrorPage/>,
+      children:[
+        {
+          index:true,
+          element:<CharPage/>
+        },
+        {
+          path:'comics',
+          element:<ComicsPage/>
+        }
+      ]
+    }
+  ])
 
     return (
-      <Router>
-        <div className='app'>
-          <AppHeader/>
-          <main>
-            <Routes>
-              <Route path="/" element={<MainPage/>}/>
-              <Route path="/comics" element={<ComicsPage/>}/>
-            </Routes>
-          </main>
-        </div>
-      </Router>
+      <RouterProvider router={routes}/>
     )
   }
 

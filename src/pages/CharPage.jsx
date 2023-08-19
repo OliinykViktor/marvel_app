@@ -9,7 +9,7 @@ import decoration from '../assets/img/vision.png';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-const MainPage = () => {
+const CharPage = () => {
 
   const [selectChar, setSelect] = useState(null)
 
@@ -37,4 +37,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default CharPage;
