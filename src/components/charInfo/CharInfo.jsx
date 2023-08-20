@@ -52,10 +52,8 @@ const View = ({char}) => {
     if (char.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
         imgStyle = {'objectFit' : 'unset'};
     }
-    // console.log(char.char);
 
-    const elemComics = () => {
-        // console.log(char.comics.length);
+const elemComics = () => {
         char.comics.length = 10;
         return char.comics.map((elem) => (
                 <>

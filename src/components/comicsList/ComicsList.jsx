@@ -7,6 +7,7 @@ import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
 
 import './ComicsList.scss';
+import { Link } from 'react-router-dom';
 
 const ComicsList = () => {
     const [state, setState] = useState({
@@ -61,11 +62,11 @@ const ComicsList = () => {
  
 
                     >
-                    <a href="#">
+                    <Link to = {`${item.id}`}>
                         <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
                         <div className="comics__item-name">{item.title}</div>
                         <div className="comics__item-price">${item.price}$</div>
-                    </a>
+                    </Link>
                 </li>
             )
         });

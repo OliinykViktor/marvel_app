@@ -1,11 +1,11 @@
 @import '../../style/variables.scss';
 
-.comics{
+.comic{
  
     &__item{
         display: flex;
         margin-top: 50px;
-        img{
+        &_img{
         width: 293px;
         }
     }
@@ -17,7 +17,7 @@
         margin-bottom: 25px;
     }
     &__text{
-        max-width: 550px;
+        min-width: 550px;
         margin-left: 50px;
         margin-right: 127px;
     }

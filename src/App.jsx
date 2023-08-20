@@ -1,8 +1,7 @@
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
 import AppHeader from './components/appHeader/AppHeader';
-import ErrorPage from './pages/errorPage'
-import { CharPage, ComicsPage} from './pages'
+import { CharPage, ComicsPage, ComicPage, ErrorPage} from './pages'
 
 import './App.css';
 
@@ -20,6 +19,10 @@ const App = () => {
         {
           path:'comics',
           element:<ComicsPage/>
+        },
+        {
+          path:'comics/:id',
+          element:<ComicPage/>
         }
       ]
     }
@@ -27,6 +30,7 @@ const App = () => {
 
     return (
       <RouterProvider router={routes}/>
+      
     )
   }
 

@@ -1,6 +1,15 @@
-.error {
-    width: 100%;
-    height: 250px;
-    padding: 10px;
-    object-fit: contain;
+.errorMsg {
+    width: 93%;
+        &__img{
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+        }
+        &__title{
+            font: 4em sans-serif;
+        }
+        &__subtitle{
+            font: 1.33em sans-serif;
+            margin-top: 20px;
+        }
 }
