@@ -6,8 +6,9 @@ import CharList from "../components/charList/CharList";
 import CharInfo from "../components/charInfo/CharInfo";
 
 import decoration from '../assets/img/vision.png';
+import { TransitionGroup } from "react-transition-group";
 
-import { motion, AnimatePresence } from 'framer-motion';
+// import { motion, AnimatePresence } from 'framer-motion';
 
 const CharPage = () => {
 
@@ -18,12 +19,14 @@ const CharPage = () => {
   }
 
   return (
-    <AnimatePresence >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
+    // <AnimatePresence >
+    //   <motion.div
+    //     initial={{ opacity: 0 }}
+    //     animate={{ opacity: 1 }}
+    //     exit={{ opacity: 0 }}
+    //   >
+      <>
+
         <RandomChar />
         <div className="char__content">
           <ErrorBoundary>
@@ -32,8 +35,9 @@ const CharPage = () => {
           <CharInfo charId={selectChar} />
         </div>
         <img src={decoration} alt="decotarion" className="bg-decoration" />
-      </motion.div>
-    </AnimatePresence>
+      </>
+    //   </motion.div>
+    // </AnimatePresence>
   );
 };
 

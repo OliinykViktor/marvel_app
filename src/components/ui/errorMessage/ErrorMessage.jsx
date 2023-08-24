@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import errorImg from './error.gif'
 
 import './ErrorMEssage.scss'

@@ -26,6 +26,20 @@
             height: 200px;
             object-fit: cover;
         }
+        &-enter {
+            opacity: 0;
+        }
+        &-enter-active {
+            opacity: 1;
+            transition: all 700ms ease-in;
+        }
+        &-exit {
+            opacity: 1;
+        }
+        &-exit-active {
+            opacity: 0;
+            transition: all 700ms ease-in;
+        }
         &_selected{
             box-shadow: 0 5px 20px $main-color;
             transform: translateY(-8px);
@@ -40,5 +54,9 @@
         text-transform: uppercase;
         text-align: left;
         padding: 15px;
+    }
+    &_selected {
+        box-shadow: 0 5px 20px $main-color;
+        transform: translateY(-8px);
     }
 }

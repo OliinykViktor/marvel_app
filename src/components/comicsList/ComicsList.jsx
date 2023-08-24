@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useSelectedItem from '../../hooks/selectedItem.hook';
 import useMarvelService from '../../services/MarvelService';
@@ -8,6 +8,7 @@ import ErrorMessage from '../ui/errorMessage/ErrorMessage';
 
 import './ComicsList.scss';
 import { Link } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const ComicsList = () => {
     const [state, setState] = useState({
@@ -17,6 +18,8 @@ const ComicsList = () => {
         comicsEnded: false,
         classActive:'comics__item_selected',
     })
+
+    const nodeRef = useRef();
     const { loading, error, getAllComics, clearError } = useMarvelService();
     const { selectedRefs, focusItem, hadleKeyDown } = useSelectedItem()
 
@@ -51,28 +54,37 @@ const ComicsList = () => {
     function renderItems(arr) {
         const items = arr.map((item, i) => {
             return (
-                <li 
-                    className='comics__item'
-                    key={[item.id, i]}
-                    tabIndex={0}
-                    ref={(el) => selectedRefs.current[i] = el}
-                    onClick={()=>focusItem(i, state.classActive)}
-                    onMouseOver={()=>focusItem(i, state.classActive)}
-                    onKeyDown={(e) => hadleKeyDown(e, i, state.classActive)}
- 
+                <CSSTransition
+                nodeRef={nodeRef}
+                    key={item.id}
+                    classNames={'comics'}
+                    timeout={700}
+                >
+                    <li 
+                        className='comics__item'
+                        key={[item.id, i]}
+                        tabIndex={0}
+                        ref={(el) => selectedRefs.current[i] = el}
+                        onClick={()=>focusItem(i, state.classActive)}
+                        onMouseOver={()=>focusItem(i, state.classActive)}
+                        onKeyDown={(e) => hadleKeyDown(e, i, state.classActive)}
+    
 
-                    >
-                    <Link to = {`${item.id}`}>
-                        <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
-                        <div className="comics__item-name">{item.title}</div>
-                        <div className="comics__item-price">${item.price}$</div>
-                    </Link>
-                </li>
+                        >
+                        <Link to = {`${item.id}`}>
+                            <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
+                            <div className="comics__item-name">{item.title}</div>
+                            <div className="comics__item-price">${item.price}$</div>
+                        </Link>
+                    </li>
+                </CSSTransition>
             )
         });
         return (
             <ul className="comics__grid">
-                {items}
+                <TransitionGroup component={null}>
+                    {items}
+                </TransitionGroup>
             </ul>
         )
     }
