@@ -2,27 +2,35 @@ import { Suspense } from 'react';
 import './AppHeader.scss';
 import { NavLink, Outlet } from 'react-router-dom';
 import Spinner from '../ui/spinner/Spinner';
+import SearchBar from '../searchBar/SearchBar';
+import Marvel from '../../assets/Marvel_Comics.png'
 
 const AppHeader = () => {
     return (
         <div className='app'>
             <header className='app__header'>
-                <h1 className='app__title'>
+                <div className="app__logo">
+                    
                     <NavLink to='/'>
-                        <span>Marvel</span> information portal
+                        <img src={Marvel} alt="" className='app__logo_img'/>
                     </NavLink>
-                </h1>
+                    
+                </div>
+                
                 <nav className="app__nav">
+                <h1 className='app__title'>
+                        information portal
+                    </h1>
+                    <SearchBar/>
                     <ul>
                         <li><NavLink 
                             style={({isActive}) =>({
-                                color: isActive? '#9f0013':'inherit'
+                                color: isActive? '#ed1b24':'white'
                             })}
                             to='/'>Characters</NavLink></li>
-                        / 
                         <li><NavLink 
                                 style={({isActive}) =>({
-                                color: isActive? '#9f0013':'inherit'
+                                color: isActive? '#ed1b24':'white'
                             })}
                             to='/comics'>Comics</NavLink></li>
                     </ul>

@@ -2,19 +2,31 @@
 
 .app{
     &__header{
+        background-color: #232222;
+        box-shadow: 7px 7px 10px 10px rgba(0, 0, 0, 0.25);
+    }
+    &__logo{
         display: flex;
         justify-content: space-between;
+        padding: 15px 10px;
+        border-bottom: 2px solid #3d3b3b;
+        &_img{
+            max-width: 360px;
+            max-height: 47px;
+        }
     }
     &__title{
+        color:white;
+        margin-left: 10px;
         font-size: 28px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        span{
-            color: $main-color;
-        }
     }
     &__nav{
+        padding: 15px 10px;
+        display: flex;
+        justify-content: space-between;
         ul{
             display: flex;
             justify-content: space-between;
@@ -25,7 +37,7 @@
             li{
                 margin: 0 8px;
                 a{
-                    transition: color 0.3s ease, transform 0.3s ease;
+                    transition: color 0.3s ease;
                     &:hover{
                         color:$main-color;
                         transform: translateY(-5px);
