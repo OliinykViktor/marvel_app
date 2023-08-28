@@ -17,21 +17,24 @@
         margin-bottom: 25px;
     }
     &__text{
-        min-width: 550px;
+        width: 550px;
         margin-left: 50px;
         margin-right: 127px;
     }
     &__descr{
+        margin-top: 25px;
         text-align: start;
         font-size: 18px;
         font-weight: 400;
         line-height: normal;
-        span{
-            color: $main-color;
-            font-size: 24px;
-            font-weight: 700;
-            line-height: normal;
-        }
+    }
+    &__price{
+        margin-top: 25px;
+        text-align: start;
+        color: $main-color;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: normal;
     }
     &__link{
         font-size: 18px;

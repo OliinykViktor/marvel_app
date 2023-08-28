@@ -8,9 +8,11 @@ const useMarvelService = () => {
     const _apiKey = import.meta.env.VITE_REACT_APP_MARVEL_API_KEY;
     const _baseOffSetChar = 210;
     const _baseOffSetComics = 510;
+    const _limitChars = 9;
+    const _limitComics = 8;
 
-    const getAllCharacters = async (offset = _baseOffSetChar) => {
-        const res = await reguest(`${_apiBase}characters?limit=9&offset=${offset}&apikey=${_apiKey}`);
+    const getAllCharacters = async (offset = _baseOffSetChar, limit = _limitChars) => {
+        const res = await reguest(`${_apiBase}characters?limit=${limit}&offset=${offset}&apikey=${_apiKey}`);
         return res.data.results.map(_transformCharacter);
     }
 
@@ -24,7 +26,7 @@ const useMarvelService = () => {
         return {
             id: char.id,
             name: char.name,
-            descr: char.description
+            description: char.description
                 ? char.description.slice(0, 227)
                 + `...`
                 : 'There is no description for this character',
@@ -35,8 +37,8 @@ const useMarvelService = () => {
         }
     }
 
-    const getAllComics = async (offset = _baseOffSetComics) => {
-        const res = await reguest(`${_apiBase}comics?limit=8&offset=${offset}&apikey=${_apiKey}`);
+    const getAllComics = async (offset = _baseOffSetComics, limit = _limitComics) => {
+        const res = await reguest(`${_apiBase}comics?limit=${limit}&offset=${offset}&apikey=${_apiKey}`);
         return res.data.results.map(_transformComic);
     }
 
@@ -49,7 +51,7 @@ const useMarvelService = () => {
 
         return {
             id: comic.id,
-            title: comic.title,
+            name: comic.title,
             description: comic.description
                 ? `${comic.description}`
                 : "There is no description",
@@ -71,7 +73,7 @@ const useMarvelService = () => {
         getAllCharacters,
         getCharacter,
         getAllComics,
-        getComic
+        getComic,
     }
 }
 

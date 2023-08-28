@@ -82,7 +82,7 @@ const elemComics = () => {
                 </div>
             </div>
             <div className="char__descr">
-                {char.descr}
+                {char.description}
             </div>
             <div className="char__comics">Comics:</div>
             <ul className="char__comics-list">

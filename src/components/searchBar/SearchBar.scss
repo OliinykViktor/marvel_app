@@ -5,20 +5,44 @@
         display: flex;
     }
     &__input{
-        min-width: 250px;
+        position: relative;
+        min-width: 350px;
         max-height: 38px;
         padding: 15px 5px;
         color: #000000c5;
+        border-radius: 2px;
         &:hover{
             outline: 1.5px solid $main-color;
         }
     }
-        &__icon{
-            max-height: 38px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+    &__icon{
+        position: absolute;
+        left: 765px;
+        top: 50%;
+        transform: translateY(-50%);
+        color:$light-grey;
+        font-size: 27px;
+
+    }
+    &__preview{
+        position: absolute;
+        top: 50px;
+        z-index: 1000;
+        background-color: $white;
+        padding: 5px;
+        border-radius: 0 0 4px 4px;
+        background-color: $light-grey;
+        max-width: 350px;
+        min-height: 38px;
+        & li{
+            text-align: left;
+            margin-top: 3px;
+            padding-left: 5px;
+            color: $grey;
             &:hover{
-                transform: scale(1.2);
+                color:$white;
+                background-color: $main-light-color;
             }
         }
+    }
 }

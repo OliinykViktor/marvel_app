@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import useSelectedItem from '../../hooks/selectedItem.hook';
 import useMarvelService from '../../services/MarvelService';
@@ -7,8 +9,6 @@ import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
 
 import './ComicsList.scss';
-import { Link } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const ComicsList = () => {
     const [state, setState] = useState({
@@ -55,7 +55,7 @@ const ComicsList = () => {
         const items = arr.map((item, i) => {
             return (
                 <CSSTransition
-                nodeRef={nodeRef}
+                    nodeRef={nodeRef}
                     key={item.id}
                     classNames={'comics'}
                     timeout={700}
@@ -68,12 +68,10 @@ const ComicsList = () => {
                         onClick={()=>focusItem(i, state.classActive)}
                         onMouseOver={()=>focusItem(i, state.classActive)}
                         onKeyDown={(e) => hadleKeyDown(e, i, state.classActive)}
-    
-
-                        >
+                    >
                         <Link to = {`${item.id}`}>
-                            <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
-                            <div className="comics__item-name">{item.title}</div>
+                            <img src={item.thumbnail} alt={item.name} className="comics__item-img" />
+                            <div className="comics__item-name">{item.name}</div>
                             <div className="comics__item-price">${item.price}$</div>
                         </Link>
                     </li>

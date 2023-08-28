@@ -1,0 +1,13 @@
+@import '../../style/variables.scss';
+
+.shop__cart{
+    color:$white;
+    margin: 7px 7px 0 0;
+    font-size: 34px;
+    cursor: pointer;
+    transition: color, scale 300ms ease;
+    &:hover, &.active{
+        color: $main-color;
+        scale: (1.1);
+    }
+}

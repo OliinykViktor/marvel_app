@@ -1,7 +1,7 @@
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
 import AppHeader from './components/appHeader/AppHeader';
-import { CharPage, ComicsPage, ComicPage, ErrorPage} from './pages'
+import { CharPage, ComicsPage, InformPage, ErrorPage} from './pages'
 
 import './App.css';
 
@@ -22,7 +22,11 @@ const App = () => {
         },
         {
           path:'comics/:id',
-          element:<ComicPage/>
+          element:<InformPage/>
+        },
+        {
+          path:'character/:id',
+          element:<InformPage/>
         }
       ]
     }

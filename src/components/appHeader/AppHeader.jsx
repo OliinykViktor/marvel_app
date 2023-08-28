@@ -1,27 +1,21 @@
 import { Suspense } from 'react';
 import './AppHeader.scss';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import Spinner from '../ui/spinner/Spinner';
 import SearchBar from '../searchBar/SearchBar';
 import Marvel from '../../assets/Marvel_Comics.png'
+import ShopCart from "../shopCart/ShopCart";
 
 const AppHeader = () => {
+    const location = useLocation();
+
     return (
         <div className='app'>
-            <header className='app__header'>
-                <div className="app__logo">
-                    
-                    <NavLink to='/'>
-                        <img src={Marvel} alt="" className='app__logo_img'/>
-                    </NavLink>
-                    
-                </div>
-                
+            <header className='app__header'>                
                 <nav className="app__nav">
-                <h1 className='app__title'>
-                        information portal
-                    </h1>
-                    <SearchBar/>
+                    <NavLink to='/'>
+                        <img src={Marvel} alt="" className='app__nav_img'/>
+                    </NavLink>
                     <ul>
                         <li><NavLink 
                             style={({isActive}) =>({
@@ -35,6 +29,13 @@ const AppHeader = () => {
                             to='/comics'>Comics</NavLink></li>
                     </ul>
                 </nav>
+                <div className="app__panel">
+                    <h1 className='app__title'>
+                        information portal
+                    </h1>
+                    <SearchBar parameter ={ location.pathname === '/comics' ? 'comics' : 'char'} />
+                    <ShopCart/>
+                </div>
             </header>
             <main>
                 <Suspense fallback={<Spinner/>}>
