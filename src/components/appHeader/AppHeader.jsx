@@ -8,23 +8,23 @@ import ShopCart from "../shopCart/ShopCart";
 
 const AppHeader = () => {
     const location = useLocation();
-
+    const { pathname } = location;
     return (
         <div className='app'>
-            <header className='app__header'>                
+            <header className='app__header'>
                 <nav className="app__nav">
                     <NavLink to='/'>
-                        <img src={Marvel} alt="" className='app__nav_img'/>
+                        <img src={Marvel} alt="" className='app__nav_img' />
                     </NavLink>
                     <ul>
-                        <li><NavLink 
-                            style={({isActive}) =>({
-                                color: isActive? '#ed1b24':'white'
+                        <li><NavLink
+                            style={({ isActive }) => ({
+                                color: isActive ? '#ed1b24' : 'white'
                             })}
                             to='/'>Characters</NavLink></li>
-                        <li><NavLink 
-                                style={({isActive}) =>({
-                                color: isActive? '#ed1b24':'white'
+                        <li><NavLink
+                            style={({ isActive }) => ({
+                                color: isActive ? '#ed1b24' : 'white'
                             })}
                             to='/comics'>Comics</NavLink></li>
                     </ul>
@@ -33,13 +33,13 @@ const AppHeader = () => {
                     <h1 className='app__title'>
                         information portal
                     </h1>
-                    <SearchBar parameter ={ location.pathname === '/comics' ? 'comics' : 'char'} />
-                    <ShopCart/>
+                    <SearchBar pathname={pathname} />
+                    <ShopCart />
                 </div>
             </header>
             <main>
-                <Suspense fallback={<Spinner/>}>
-                    <Outlet/>
+                <Suspense fallback={<Spinner />}>
+                    <Outlet />
                 </Suspense>
             </main>
         </div>

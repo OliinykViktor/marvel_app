@@ -46,7 +46,7 @@ const InformPage = () => {
             {spinner}
             {content}
             <div className="comic__link">
-                <Link to='/comics'>Back to all</Link>
+                <Link to='./'>Back to all</Link>
             </div>
         </div>
     );
