@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AppHeader from './components/appHeader/AppHeader';
 import { CharPage, ComicsPage, InformPage, ErrorPage } from './pages'
 
+import { CartProvider } from './context/CartContext';
+
 import './App.css';
 
 const App = () => {
@@ -33,7 +35,10 @@ const App = () => {
   ])
 
   return (
+  <CartProvider>
     <RouterProvider router={routes} />
+  </CartProvider>
+    
 
   )
 }

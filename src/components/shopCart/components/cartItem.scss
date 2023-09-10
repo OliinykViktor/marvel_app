@@ -1,12 +1,74 @@
 @import '../../../style/variables.scss';
 
-.cart__item{
-    position: absolute;
-    top: 50px;
-    right: 5px;
-    border-radius: 2px;
+.cart {
+  &__subtitle{
+    margin-left: 5px;
+    color: $grey;
+  }
+  &__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
-    width: 250px;
-    min-height: 100px;
-    background-color: $white;
+
+    &__content {
+      position: relative;
+      background-color: $white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  &__icon{
+    cursor: pointer;
+    transition: all 0.4s ease;
+    &:hover{
+      border-radius:2px;
+      transform: scale(1.05);
+      color: $main-light-color;
+    }
+  }
+  &__info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  &__img{
+    width: 32px;
+    transition: all 0.5s ease;
+    &:hover{
+      transform: scale(1.5);
+    }
+  }
+  &__quantity{
+    display: flex;
+    align-items: center;
+  }
+  &__input{
+      width: 34px;
+      margin: 0 4px;  
+      text-align: center;
+  }
+  &__total{
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
 }

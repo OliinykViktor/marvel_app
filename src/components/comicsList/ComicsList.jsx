@@ -4,9 +4,12 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import useSelectedItem from '../../hooks/selectedItem.hook';
 import useMarvelService from '../../services/MarvelService';
+import { useCart } from '../../context/CartContext';
 
 import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
+import { BiCartAdd } from 'react-icons/bi';
+import ErrorImage from '../../assets/img/error_data.jpg'
 
 import './ComicsList.scss';
 
@@ -16,9 +19,10 @@ const ComicsList = () => {
         newItemsLoading: false,
         offset: 510,
         comicsEnded: false,
-        classActive:'comics__item_selected',
+        classActive: 'comics__item_selected',
     })
 
+    const { addCart } = useCart();
     const nodeRef = useRef();
     const { loading, error, getAllComics, clearError } = useMarvelService();
     const { selectedRefs, focusItem, hadleKeyDown } = useSelectedItem()
@@ -53,6 +57,10 @@ const ComicsList = () => {
 
     function renderItems(arr) {
         const items = arr.map((item, i) => {
+            let imgStyle = item.thumbnail;
+            if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+                imgStyle = ErrorImage;
+            }
             return (
                 <CSSTransition
                     nodeRef={nodeRef}
@@ -60,20 +68,23 @@ const ComicsList = () => {
                     classNames={'comics'}
                     timeout={700}
                 >
-                    <li 
+                    <li
                         className='comics__item'
-                        key={[item.id, i]}
+                        key={item.id}
                         tabIndex={0}
                         ref={(el) => selectedRefs.current[i] = el}
-                        onClick={()=>focusItem(i, state.classActive)}
-                        onMouseOver={()=>focusItem(i, state.classActive)}
+                        onClick={() => focusItem(i, state.classActive)}
+                        onMouseOver={() => focusItem(i, state.classActive)}
                         onKeyDown={(e) => hadleKeyDown(e, i, state.classActive)}
                     >
-                        <Link to = {`${item.id}`}>
-                            <img src={item.thumbnail} alt={item.name} className="comics__item-img" />
+                        <Link to={`${item.id}`}>
+                            <img src={imgStyle} alt={item.name} className="comics__item-img" />
                             <div className="comics__item-name">{item.name}</div>
                             <div className="comics__item-price">${item.price}$</div>
                         </Link>
+                        <BiCartAdd className='comics__add_cart'
+                            onClick={() => addCart(item)}
+                        />
                     </li>
                 </CSSTransition>
             )

@@ -11,6 +11,9 @@ import './InformPage.scss';
 
 const InformPage = () => {
     const location = useLocation();
+    const {pathname} = location;
+    const isComicsPage = pathname.includes("comics");
+
     const [comic, setComic] = useState(null);
     const { getComic, getCharacter, loading, error, clearError } = useMarvelService();
 
@@ -21,7 +24,7 @@ const InformPage = () => {
 
     const updateComic = (id) => {
         clearError()
-        if (location.pathname.includes('comics')) {
+        if (isComicsPage) {
             getComic(id)
                 .then(onComicLoaded)
         } else{

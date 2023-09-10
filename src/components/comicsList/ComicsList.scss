@@ -1,6 +1,7 @@
 @import '../../style/variables.scss';
 
 .comics{
+    height: 415px;
     &__list{
         margin-top: 40px;
     }
@@ -11,6 +12,7 @@
         row-gap: 55px;
     }
     &__item{
+        position: relative;
         width: 225px;
         height: 415px;
         padding: 5px;
@@ -36,6 +38,19 @@
         &_selected{
             box-shadow: 0 5px 20px $main-color;
             animation: selected 500ms linear 1 forwards
+        }
+    }
+    &__add_cart{
+        position:absolute;
+        bottom: 10px;
+        right: 10px;
+        color:$main-color;
+        font-size: 34px;
+        cursor: pointer;
+        transition: color, scale 300ms ease;
+        &:hover, &.active{
+            color: $main-color;
+            scale: (1.1);
         }
     }
 }
