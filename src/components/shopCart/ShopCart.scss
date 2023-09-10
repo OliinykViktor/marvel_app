@@ -1,13 +1,34 @@
 @import '../../style/variables.scss';
 
-.shop__cart{
-    color:$white;
-    margin: 7px 7px 0 0;
-    font-size: 34px;
-    cursor: pointer;
-    transition: color, scale 300ms ease;
-    &:hover, &.active{
+.shop {
+    &__cart {
+        position: relative;
+        color: $white;
+        margin: 7px 7px 0 0;
+        font-size: 34px;
+        cursor: pointer;
+        transition: all 300ms ease;
+
+        &:hover,
+        &.active {
+            color: $main-color;
+            scale: (1.1);
+        }
+    }
+
+    &__counter {
+        position: absolute;
+        z-index: 999;
         color: $main-color;
-        scale: (1.1);
+        right: 19px;
+        top: 22px;
+        font-size: 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 300ms ease;
+        &.active {
+            color: $white;
+            scale: (1.1);
+        }
     }
 }

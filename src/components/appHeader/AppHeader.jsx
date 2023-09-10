@@ -31,7 +31,7 @@ const AppHeader = () => {
                 </nav>
                 <div className="app__panel">
                     <h1 className='app__title'>
-                        information portal
+                        {pathname === '/comics' ? 'comics shop' : 'information portal'}
                     </h1>
                     <SearchBar pathname={pathname} />
                     <ShopCart />

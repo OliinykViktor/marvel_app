@@ -16,24 +16,25 @@ export function CartProvider({ children }) {
         if (itemExists) {
             setCartItems((prevItems) =>
                 prevItems.map((elem) =>
-                elem.id === item.id
-                    ? { ...elem, quantity: elem.quantity + 1 } 
-                    : elem
+                    elem.id === item.id
+                        ? { ...elem, quantity: elem.quantity + 1 }
+                        : elem
                 )
             )
         } else {
-            const newItem ={
-                id:item.id,
+            const newItem = {
+                id: item.id,
                 quantity: 1,
                 name: item.name,
-                price: item.price
+                price: item.price,
+                thumbnail: item.thumbnail
             };
             setCartItems((prevItems) => [...prevItems, newItem])
         }
     }
 
     const removeCart = (item) => {
-        setCartItems((prevItems) => prevItems.filter((elem) => elem.id !== item.id));
+        setCartItems((prevItems) => prevItems.filter((elem) => elem.id !== item));
     }
 
     const clearCart = () => {
@@ -41,8 +42,13 @@ export function CartProvider({ children }) {
     };
 
     return (
-            <CartContext.Provider value = {{cartItems, addCart, removeCart, clearCart}}>
-                {children}
-            </CartContext.Provider>
-        )
+        <CartContext.Provider value={{
+            cartItems,
+            addCart,
+            removeCart,
+            clearCart,
+        }}>
+            {children}
+        </CartContext.Provider>
+    )
 }

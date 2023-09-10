@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCart } from '../../context/CartContext';
 
 import CartItem from './components/cartItem';
 
@@ -8,19 +9,23 @@ import './ShopCart.scss';
 
 const ShopCart = () => {
   const [cartOpen, setCartOpen] = useState(false);
+  const { cartItems } = useCart()
+
+  const isCartActive = cartOpen || (cartItems.length > 0);
 
   const onClickCart = () => {
     setCartOpen(!cartOpen);
   };
 
   return (
-    <>
+    <div className='shop'>
       <HiShoppingCart
-        className={`shop__cart ${cartOpen && 'active'}`}
+        className={`shop__cart ${isCartActive ? 'active' : ''}`}
         onClick={onClickCart}
       />
+      <span className={`shop__counter ${isCartActive ? 'active' : ''}`}>{cartItems.length}</span>
       {cartOpen && <CartItem onClickCart={onClickCart} />}
-    </>
+    </div>
   );
 };
 
