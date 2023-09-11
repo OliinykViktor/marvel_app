@@ -1,5 +1,5 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import useMarvelService from '../../services/MarvelService';
 
 import PropTypes from 'prop-types';
@@ -8,8 +8,9 @@ import ErrorMessage from '../../components/ui/errorMessage/ErrorMessage';
 import Spinner from '../../components/ui/spinner/Spinner';
 
 import './InformPage.scss';
+import { ViewProps } from '../../types/commonTypes';
 
-const InformPage = () => {
+const InformPage: FC = () => {
     const location = useLocation();
     const {pathname} = location;
     const isComicsPage = pathname.includes("comics");
@@ -55,7 +56,7 @@ const InformPage = () => {
     );
 };
 
-const View = ({ comic }) => {
+const View: FC <ViewProps> = ({ comic }) => {
     const { name, thumbnail, description, pageCount, language, price } = comic;
     return (
         <>

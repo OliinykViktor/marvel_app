@@ -37,3 +37,15 @@ export interface Comic {
   thumbnail: string;
   language: string;
 }
+
+export interface ViewProps {
+  comic:{
+    name: string, 
+    thumbnail: string, 
+    description: string, 
+    pageCount?: string, 
+    language?: string, 
+    price?: number
+  }
+}
+

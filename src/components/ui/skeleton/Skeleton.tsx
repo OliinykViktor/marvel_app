@@ -1,6 +1,8 @@
+import React, {FC} from 'react';
+
 import './Skeleton.scss';
 
-const Skeleton = () => {
+const Skeleton:FC  = () => {
     return (
         <>
          <p className="char__select">Please select s character to see information</p>

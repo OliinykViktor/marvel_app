@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import AppHeader from './components/appHeader/AppHeader';
@@ -7,7 +9,7 @@ import { CartProvider } from './context/CartContext';
 
 import './App.css';
 
-const App = () => {
+const App: FC = () => {
   const routes = createBrowserRouter([
     {
       path: '/',
@@ -35,11 +37,9 @@ const App = () => {
   ])
 
   return (
-  <CartProvider>
-    <RouterProvider router={routes} />
-  </CartProvider>
-    
-
+    <CartProvider>
+      <RouterProvider router={routes} />
+    </CartProvider>
   )
 }
 
