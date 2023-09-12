@@ -3,12 +3,12 @@ import { useCart } from '../../../context/CartContext';
 import { AiFillDelete, AiFillMinusSquare, AiFillPlusSquare, AiFillCloseSquare } from 'react-icons/ai';
 
 import './cartItem.scss';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
+import { CarItemProps } from '../../../types/commonTypes';
 
-const CartItem = ({ onClickCart }) => {
+const CartItem: FC<CarItemProps> = ({ onClickCart }) => {
   const { removeCart, cartItems } = useCart();
-  const [priceTotal, setPriceTotal] = useState(0)
+  const [priceTotal, setPriceTotal] = useState<number | string>(0)
 
   const calculateTotal = () => {
     let total = 0;
@@ -26,21 +26,21 @@ const CartItem = ({ onClickCart }) => {
     calculateTotal()
   }, [cartItems])
 
-  const handleIncreaseQuantity = (item) => {
+  const handleIncreaseQuantity = (item: CarItemProps ) => {
     if (item.quantity < 50) {
       item.quantity++;
       calculateTotal()
     }
   }
 
-  const handleDecreaseQuantity = (item) => {
+  const handleDecreaseQuantity = (item: CarItemProps ) => {
     if (item.quantity > 1) {
       item.quantity--;
       calculateTotal()
     }
   }
 
-  const formattedPrice = (item) => {
+  const formattedPrice = (item: CarItemProps ) => {
     return (item.price * item.quantity).toFixed(2)
   } 
 
@@ -60,7 +60,7 @@ const CartItem = ({ onClickCart }) => {
             onClick={() => handleDecreaseQuantity(item)} />
           <input className='cart__input'
             type="number"
-            value={item.quantity} />
+            value={item.quantity.toString()} />
           <AiFillPlusSquare className='cart__icon'
             onClick={() => handleIncreaseQuantity(item)} />
         </div>

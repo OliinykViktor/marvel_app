@@ -39,13 +39,25 @@ export interface Comic {
 }
 
 export interface ViewProps {
-  comic:{
-    name: string, 
-    thumbnail: string, 
-    description: string, 
-    pageCount?: string, 
-    language?: string, 
-    price?: number
-  }
+  comic: {
+    name: string;
+    thumbnail: string;
+    description: string;
+    pageCount?: string;
+    language?: string;
+    price?: number;
+  };
 }
 
+export interface CarItemProps {
+  onClickCart: () => void,
+  id: number,
+  name: string,
+  thumbnail: string,
+  quantity: number,
+  price: number
+}
+
+// export interface CartItem {
+
+// }
