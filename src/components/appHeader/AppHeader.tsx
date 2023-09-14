@@ -1,14 +1,26 @@
-import { Suspense } from 'react';
-import './AppHeader.scss';
+import React, { Suspense, FC } from 'react';
+
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
+
 import Spinner from '../ui/spinner/Spinner';
+
 import SearchBar from '../searchBar/SearchBar';
-import Marvel from '../../assets/Marvel_Comics.png'
 import ShopCart from "../shopCart/ShopCart";
 
-const AppHeader = () => {
+import './AppHeader.scss';
+
+import Marvel from '../../assets/Marvel_Comics.png'
+
+const AppHeader: FC = () => {
     const location = useLocation();
     const { pathname } = location;
+
+    const appTitle: string = pathname === '/comics' ? 'comics shop' : 'information portal';
+
+    const isActiveColor = ({ isActive }: { isActive: boolean }): { color: string } => ({
+        color: isActive ? '#ed1b24' : 'white'
+    });
+
     return (
         <div className='app'>
             <header className='app__header'>
@@ -18,20 +30,16 @@ const AppHeader = () => {
                     </NavLink>
                     <ul>
                         <li><NavLink
-                            style={({ isActive }) => ({
-                                color: isActive ? '#ed1b24' : 'white'
-                            })}
+                            style={isActiveColor}
                             to='/'>Characters</NavLink></li>
                         <li><NavLink
-                            style={({ isActive }) => ({
-                                color: isActive ? '#ed1b24' : 'white'
-                            })}
+                            style={isActiveColor}
                             to='/comics'>Comics</NavLink></li>
                     </ul>
                 </nav>
                 <div className="app__panel">
                     <h1 className='app__title'>
-                        {pathname === '/comics' ? 'comics shop' : 'information portal'}
+                        {appTitle}
                     </h1>
                     <SearchBar pathname={pathname} />
                     <ShopCart />

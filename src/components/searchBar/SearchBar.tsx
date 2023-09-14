@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC, ChangeEvent } from 'react';
+
+import LinkItem from './components/linkItem/LinkItem';
+
 import useMarvelService from '../../services/MarvelService';
-import './SearchBar.scss';
 
 import { FaSearch } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
-const SearchBar = ({ pathname }) => {
-    const [state, setState] = useState([]);
-    const [text, setText] = useState('');
-    const [settingReg, setSettingReg] = useState({
+import './SearchBar.scss';
+
+import { SearchBarProps, SettingReg, ListItem } from '../../types/commonTypes'
+
+const SearchBar: FC<SearchBarProps> = ({ pathname }) => {
+    const [state, setState] = useState<ListItem[]>([]);
+    const [text, setText] = useState<string>('');
+    const [settingReg, setSettingReg] = useState<SettingReg>({
         offset: 0,
         limit: 100
     });
@@ -18,12 +23,13 @@ const SearchBar = ({ pathname }) => {
 
     const isComicsPage = pathname.includes("comics");
 
+    const searchPlaceholder = `type to search ${isComicsPage ? 'comic' : 'character'}...`;
 
     useEffect(() => {
         onReguest(offset, limit);
     }, [isComicsPage]);
 
-    const onReguest = (offset, limit) => {
+    const onReguest = (offset: number, limit: number) => {
 
         if (isComicsPage) {
             getAllComics(offset, limit)
@@ -34,29 +40,24 @@ const SearchBar = ({ pathname }) => {
         }
     };
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value)
     };
 
-    const filteredItems = () => {
-        return state.filter(item => {
+    const filteredItems = (): ListItem[] => {
+        return state.filter((item: ListItem) => {
             return item.name && item.name.toLowerCase().includes(text.toLowerCase());
         });
     };
 
-    function ElementList() {
+    const ElementList: FC = () => {
         const maxItemsToShow = 3;
-        const itemsToDisplay = filteredItems().slice(0, maxItemsToShow);
+        const itemsToDisplay: ListItem[] = filteredItems().slice(0, maxItemsToShow);
+
 
         const lists = itemsToDisplay.map((item) => (
             <li key={item.id}>
-                {
-                    isComicsPage ?
-                        <Link to={`/comics/${item.id}`}>{item.name}</Link>
-                        :
-                        <Link to={`/character/${item.id}`}>{item.name}</Link>
-
-                }
+                <LinkItem isComicsPage={isComicsPage} item={item}/>
             </li>
         ));
 
@@ -73,10 +74,10 @@ const SearchBar = ({ pathname }) => {
                 onChange={onChange}
                 name='search'
                 type="text"
-                placeholder={`type to search ${isComicsPage ? 'comic' : 'character'}...`}
+                placeholder={searchPlaceholder}
                 className='search__input' />
             <FaSearch className='search__icon' />
-            {text ? ElementList() : null}
+            {text ? <ElementList /> : null}
         </div>
     );
 };

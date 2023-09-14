@@ -1,25 +1,34 @@
-import { useEffect, useState } from 'react';
-import Mjolnir from '../../assets/img/mjolnir.png';
+import React, { useEffect, useState, FC } from 'react';
 import useMarvelService from '../../services/MarvelService';
 
-import './RandomChar.scss';
 import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
 
-const RandomChar = () => {
+import { Character, ViewRandomProps } from '../../types/commonTypes';
 
-    const [char, setChar] = useState(null);
+import './RandomChar.scss';
+
+import Mjolnir from '../../assets/img/mjolnir.png';
+import useImgStyle from '../../hooks/imgStyle';
+
+const RandomChar: FC = () => {
+
+    const [char, setChar] = useState<Character | null>(null);
     const { loading, error, getCharacter, clearError } = useMarvelService();
 
     useEffect(() => {
         updateCharacter();
-        // const timeId = setInterval(updateCharacter, 60000);
-        // return () => {
-        //     clearInterval(timeId)
-        // }
+        const timeId = setInterval(updateCharacter, 60000);
+        return () => {
+            clearInterval(timeId)
+        }
     }, [])
 
-    const onCharLoaded = (char) => {
+    const errorMessage = error ? <ErrorMessage /> : null;
+    const spinner = loading ? <Spinner /> : null;
+    const content = !(loading || errorMessage || !char) ? <View char={char} /> : null;
+
+    const onCharLoaded = (char: Character) => {
         setChar(char);
     }
 
@@ -30,15 +39,13 @@ const RandomChar = () => {
             .then(onCharLoaded);
     }
 
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const content = !(loading || errorMessage || !char) ? <View char={char} /> : null;
+
 
     return (
-        <div className="randomchar">      
-                    {errorMessage}
-                    {spinner}
-                    {content}
+        <div className="randomchar">
+            {errorMessage}
+            {spinner}
+            {content}
             <div className="randomchar__static">
                 <div>
                     <p className="randomchar__title">
@@ -59,16 +66,16 @@ const RandomChar = () => {
 
 }
 
-const View = ({ char }) => {
+const View: FC<ViewRandomProps> = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki } = char;
-    let imgStyle = { 'objectFit': 'cover' };
-    if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
-        imgStyle = { 'objectFit': 'contain' }
-    }
+    const imgStyle = useImgStyle(thumbnail);
 
     return (
         <div className="randomchar__block">
-            <img src={thumbnail} alt={name} className="randomchar__img" style={imgStyle} />
+            <img src={imgStyle}
+                alt={name}
+                className="randomchar__img"
+            />
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">{description}</p>

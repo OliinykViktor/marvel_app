@@ -16,6 +16,7 @@
         width: 225px;
         height: 415px;
         padding: 5px;
+        box-shadow: $main-shadow;
         transition: 0.3s transform;
         &-img{
             width: 100%;

@@ -31,33 +31,69 @@ export interface Character {
 export interface Comic {
   id: number;
   name: string;
-  description: string;
-  pageCount: string;
+  description?: string;
+  pageCount?: string;
   price: number;
   thumbnail: string;
-  language: string;
+  language?: string;
 }
 
 export interface ViewProps {
+  isComics: boolean;
   comic: {
     name: string;
     thumbnail: string;
     description: string;
-    pageCount?: string;
-    language?: string;
-    price?: number;
+    pageCount?: string | undefined;
+    language?: string | undefined;
+    price?: number | undefined;
   };
 }
 
 export interface CarItemProps {
-  onClickCart: () => void,
-  id: number,
-  name: string,
-  thumbnail: string,
-  quantity: number,
-  price: number
+  onClickCart: () => void;
+  id: number;
+  name: string;
+  thumbnail: string;
+  quantity: number;
+  price: number;
 }
 
-// export interface CartItem {
+export interface SearchBarProps {
+  pathname: string;
+}
 
-// }
+export interface SettingReg {
+  offset: number;
+  limit: number;
+}
+
+export interface ListItem {
+  id: number;
+  name: string;
+}
+
+export type ViewRandomProps = {
+  char: Character;
+};
+
+export interface ListState<T> {
+  itemList: T[];
+  newItemsLoading: boolean;
+  offset: number;
+  listEnded: boolean;
+  classActive: string;
+}
+
+export interface ListProps<T> {
+  onSelectedChar: (charId: number) => void;
+}
+
+export interface CharInfoProps {
+  charId: number | null;
+}
+
+export interface LinkItemProps {
+  isComicsPage: boolean;
+  item: ListItem;
+}

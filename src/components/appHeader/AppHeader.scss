@@ -4,7 +4,7 @@
     &__header{
         background-color: #232222;
         padding: 0 7px;
-        box-shadow: 7px 7px 10px 10px rgba(0, 0, 0, 0.25);
+        box-shadow: $main-shadow;
     }
     &__panel{
         position: relative;
@@ -15,12 +15,14 @@
 
     }
     &__title{
+        width: 210px;
         color:white;
         margin-left: 10px;
         font-size: 28px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        text-align: left;
     }
     &__nav{
         padding: 10px 0;

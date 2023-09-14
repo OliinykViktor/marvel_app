@@ -1,21 +1,19 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import useMarvelService from '../../services/MarvelService';
-
-import PropTypes from 'prop-types';
 
 import ErrorMessage from '../../components/ui/errorMessage/ErrorMessage';
 import Spinner from '../../components/ui/spinner/Spinner';
 
 import './InformPage.scss';
-import { ViewProps } from '../../types/commonTypes';
+import { Comic, ViewProps } from '../../types/commonTypes';
 
 const InformPage: FC = () => {
     const location = useLocation();
-    const {pathname} = location;
+    const { pathname } = location;
     const isComicsPage = pathname.includes("comics");
 
-    const [comic, setComic] = useState(null);
+    const [comic, setComic] = useState<Comic | null>(null);
     const { getComic, getCharacter, loading, error, clearError } = useMarvelService();
 
     const { id } = useParams()
@@ -28,7 +26,7 @@ const InformPage: FC = () => {
         if (isComicsPage) {
             getComic(id)
                 .then(onComicLoaded)
-        } else{
+        } else {
             getCharacter(id)
                 .then(onComicLoaded)
         }
@@ -39,10 +37,10 @@ const InformPage: FC = () => {
         setComic(comic)
 
     };
-
+    const isComics = location.pathname.includes('comics');
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
-    const content = !(!comic || errorMessage || spinner) ? <View comic={comic} /> : null;
+    const content = !(!comic || errorMessage || spinner) ? <View comic={comic} isComics = {isComics}/> : null;
 
     return (
         <div className="comic__item">
@@ -50,17 +48,19 @@ const InformPage: FC = () => {
             {spinner}
             {content}
             <div className="comic__link">
-                <Link to='./'>Back to all</Link>
+                <Link to={`${isComics?'/comics': '/' }`}>Back to all</Link>
             </div>
         </div>
     );
 };
 
-const View: FC <ViewProps> = ({ comic }) => {
+const View: FC<ViewProps> = ({ comic, isComics }) => {
     const { name, thumbnail, description, pageCount, language, price } = comic;
     return (
         <>
-            <img src={thumbnail} alt={name} className='comic__item_img'/>
+            <img src={thumbnail}
+                alt={name}
+                className='comic__item_img' />
             <div className="comic__text">
                 <div className="comic__title">
                     {name}
@@ -68,8 +68,8 @@ const View: FC <ViewProps> = ({ comic }) => {
                 <div className="comic__descr">
                     {description}
                 </div>
-                    {
-                        location.pathname.includes('comics')? 
+                {
+                    isComics ?
                         <>
                             <div className="comic__descr">
                                 {pageCount}
@@ -80,18 +80,11 @@ const View: FC <ViewProps> = ({ comic }) => {
                             <div className="comic__price">
                                 {price}$
                             </div>
-                        </>:null
-                    }
+                        </> : null
+                }
             </div>
         </>
     )
-}
-
-InformPage.propTypes = {
-    comic: PropTypes.object,
-    name: PropTypes.string,
-    thumbnail: PropTypes.string
-
 }
 
 export default InformPage;

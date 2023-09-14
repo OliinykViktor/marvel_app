@@ -15,7 +15,7 @@ const CharPage: FC = () => {
 
   const [selectChar, setSelect] = useState<number | null>(null)
 
-  const onSelectedChar = (id: number) => {
+  const onSelectedChar :(id: number) => void = (id)=> {
     setSelect(id);
   }
 

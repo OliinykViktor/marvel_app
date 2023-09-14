@@ -1,15 +1,9 @@
 .errorMsg {
-    width: 93%;
         &__img{
-            width: 100%;
+            display: block;
+            width: 250px;
             height: 250px;
-            object-fit: contain;
-        }
-        &__title{
-            font: 4em sans-serif;
-        }
-        &__subtitle{
-            font: 1.33em sans-serif;
-            margin-top: 20px;
+            margin: 0 auto;
+            object-fit: cover;
         }
 }
