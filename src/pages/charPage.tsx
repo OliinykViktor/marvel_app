@@ -2,6 +2,8 @@ import React, { useState, FC } from "react";
 
 import { motion } from 'framer-motion';
 
+import useMetaData from "../hooks/metaData";
+
 import RandomChar from "../components/randomChar/RandomChar";
 import ErrorBoundary from "../components/ui/errorBoundary/ErrorBoundary";
 import CharList from "../components/charList/CharList";
@@ -15,12 +17,17 @@ const CharPage: FC = () => {
 
   const [selectChar, setSelect] = useState<number | null>(null)
 
-  const onSelectedChar :(id: number) => void = (id)=> {
+  const onSelectedChar: (id: number) => void = (id) => {
     setSelect(id);
   }
+  const metadata = useMetaData({
+    title: "Marvel information portal",
+    content: "Marvel's information portal where you can search and explore Marvel characters."
+  })
 
   return (
     <motion.div{...motionsParams}>
+      {metadata}
       <RandomChar />
       <div className="char__content">
         <ErrorBoundary>

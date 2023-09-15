@@ -43,7 +43,7 @@ export interface ViewProps {
   comic: {
     name: string;
     thumbnail: string;
-    description: string;
+    description?: string;
     pageCount?: string | undefined;
     language?: string | undefined;
     price?: number | undefined;
@@ -86,7 +86,7 @@ export interface ListState<T> {
 }
 
 export interface ListProps<T> {
-  onSelectedChar: (charId: number) => void;
+  onSelectedChar?: (charId: number) => void;
 }
 
 export interface CharInfoProps {
@@ -96,4 +96,9 @@ export interface CharInfoProps {
 export interface LinkItemProps {
   isComicsPage: boolean;
   item: ListItem;
+}
+
+export interface MetadataProps {
+  title: string;
+  content: string;
 }
