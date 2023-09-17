@@ -1,12 +1,17 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
 import React, { useEffect, useState, FC } from 'react';
+import { motion } from 'framer-motion'
+
 import useMarvelService from '../../services/MarvelService';
-import useMetadata from '../../hooks/metadata';
+import motionsParams from '../../services/motionsParams';
+import Metadata from '../../utils/metadata';
+
 import ErrorMessage from '../../components/ui/errorMessage/ErrorMessage';
 import Spinner from '../../components/ui/spinner/Spinner';
 
-import './InformPage.scss';
 import { Comic, ViewProps } from '../../types/commonTypes';
+
+import './InformPage.scss';
 
 const InformPage: FC = () => {
     const location = useLocation();
@@ -21,7 +26,7 @@ const InformPage: FC = () => {
         updateComic(id)
     }, [id]);
 
-    const updateComic = (id) => {
+    const updateComic = (id: number) => {
         clearError()
         if (isComicsPage) {
             getComic(id)
@@ -40,24 +45,24 @@ const InformPage: FC = () => {
     const isComics = location.pathname.includes('comics');
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
-    const metadata = useMetadata({
+    const metadata = Metadata({
         title: `${isComics ? 'Comics' : 'Character'} page${comic ? `: ${comic.name}` : ''}`,
-        content: `${isComics? `Comics` : `Character`} page${comic? `: ${comic.name} - ${comic.description}`: ''}`
-      })
-      
+        content: `${isComics ? `Comics` : `Character`} page${comic ? `: ${comic.name} - ${comic.description}` : ''}`
+    })
 
-    const content = !(!comic || errorMessage || spinner) ? <View comic={comic} isComics = {isComics}/> : null;
+
+    const content = !(!comic || errorMessage || spinner) ? <View comic={comic} isComics={isComics} /> : null;
 
     return (
-        <div className="comic__item">
+        <motion.div  {...motionsParams} className="comic__item">
             {metadata}
             {errorMessage}
             {spinner}
             {content}
             <div className="comic__link">
-                <Link to={`${isComics?'/comics': '/' }`}>Back to all</Link>
+                <Link to={`${isComics ? '/comics' : '/'}`}>Back to all</Link>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

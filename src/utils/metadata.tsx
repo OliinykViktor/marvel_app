@@ -4,7 +4,7 @@ import Helmet  from 'react-helmet';
 
 import { MetadataProps } from '../types/commonTypes';
 
-const useMetaData: FC<MetadataProps> = ({ title, content }) => {
+const MetaData: FC<MetadataProps> = ({ title, content }) => {
     return (
         <Helmet>
             <title>{title}</title>
@@ -14,4 +14,4 @@ const useMetaData: FC<MetadataProps> = ({ title, content }) => {
     );
 };
 
-export default useMetaData;
+export default MetaData;

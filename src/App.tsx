@@ -1,11 +1,15 @@
-import React,{ FC } from 'react';
+import React, { FC, lazy } from 'react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import AppHeader from './components/appHeader/AppHeader';
-import { CharPage, ComicsPage, InformPage, ErrorPage } from './pages'
 
 import { CartProvider } from './context/CartContext';
+
+const CharPage = lazy(() => import('./pages/charPage'));
+const ComicsPage = lazy(() => import('./pages/comicsPage'));
+const InformPage = lazy(() => import('./pages/informPage/informPage'));
+const ErrorPage = lazy(() => import('./pages/errorPage/errorPage'));
 
 import './App.css';
 

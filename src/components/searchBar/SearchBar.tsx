@@ -6,9 +6,9 @@ import useMarvelService from '../../services/MarvelService';
 
 import { FaSearch } from 'react-icons/fa';
 
-import './SearchBar.scss';
-
 import { SearchBarProps, SettingReg, ListItem } from '../../types/commonTypes'
+
+import './SearchBar.scss';
 
 const SearchBar: FC<SearchBarProps> = ({ pathname }) => {
     const [state, setState] = useState<ListItem[]>([]);
@@ -57,7 +57,7 @@ const SearchBar: FC<SearchBarProps> = ({ pathname }) => {
 
         const lists = itemsToDisplay.map((item) => (
             <li key={item.id}>
-                <LinkItem isComicsPage={isComicsPage} item={item}/>
+                <LinkItem isComicsPage={isComicsPage} item={item} />
             </li>
         ));
 

@@ -1,4 +1,5 @@
 import React, { useState, FC } from 'react';
+
 import { useCart } from '../../context/CartContext';
 
 import CartItem from './components/cartItem';
@@ -7,7 +8,7 @@ import { HiShoppingCart } from 'react-icons/hi';
 
 import './ShopCart.scss';
 
-const ShopCart:FC = () => {
+const ShopCart: FC = () => {
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const { cartItems } = useCart();
 

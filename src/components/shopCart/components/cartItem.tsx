@@ -1,10 +1,12 @@
+import React, { useState, useEffect, FC } from 'react';
+
 import { useCart } from '../../../context/CartContext';
 
 import { AiFillDelete, AiFillMinusSquare, AiFillPlusSquare, AiFillCloseSquare } from 'react-icons/ai';
 
-import './cartItem.scss';
-import React, { useState, useEffect, FC } from 'react';
 import { CarItemProps } from '../../../types/commonTypes';
+
+import './cartItem.scss';
 
 const CartItem: FC<CarItemProps> = ({ onClickCart }) => {
   const { removeCart, cartItems } = useCart();
@@ -16,8 +18,8 @@ const CartItem: FC<CarItemProps> = ({ onClickCart }) => {
       cartItems.forEach((item) => {
         total += item.price * item.quantity;
       })
-      setPriceTotal(total.toFixed(2))  
-    }else{
+      setPriceTotal(total.toFixed(2))
+    } else {
       setPriceTotal(total)
     }
   }
@@ -26,23 +28,23 @@ const CartItem: FC<CarItemProps> = ({ onClickCart }) => {
     calculateTotal()
   }, [cartItems])
 
-  const handleIncreaseQuantity = (item: CarItemProps ) => {
+  const handleIncreaseQuantity = (item: CarItemProps) => {
     if (item.quantity < 50) {
       item.quantity++;
       calculateTotal()
     }
   }
 
-  const handleDecreaseQuantity = (item: CarItemProps ) => {
+  const handleDecreaseQuantity = (item: CarItemProps) => {
     if (item.quantity > 1) {
       item.quantity--;
       calculateTotal()
     }
   }
 
-  const formattedPrice = (item: CarItemProps ) => {
+  const formattedPrice = (item: CarItemProps) => {
     return (item.price * item.quantity).toFixed(2)
-  } 
+  }
 
   const items = cartItems.map((item) => (
     <div key={item.id}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, FC } from 'react';
 import useMarvelService from '../../services/MarvelService';
-import useImgStyle from '../../hooks/imgStyle';
+import getImageStyle from '../../utils/getImageStyle';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,6 +10,8 @@ import Skeleton from "../ui/skeleton/Skeleton"
 
 import './CharInfo.scss';
 import { CharInfoProps, Character } from '../../types/commonTypes';
+import {motion} from 'framer-motion';
+import motionParams from '../../services/motionListParams';
 
 const CharInfo: FC<CharInfoProps> = ({ charId }) => {
 
@@ -49,23 +51,23 @@ const CharInfo: FC<CharInfoProps> = ({ charId }) => {
 
 const View = ({ char }) => {
 
-    const imgStyle = useImgStyle(char.thumbnail);
+    const imgStyle = getImageStyle(char.thumbnail);
 
     const elemComics = () => {
         char.comics.length = 10;
         return char.comics.map((elem) => (
-            <>
-                <li className="char__comics-item"
+                <li 
+                    className="char__comics-item"
                     key={uuidv4()}>
                     <a href={elem.url}>{elem.name}</a>
                 </li>
-            </>
         ))
     }
 
     return (
-        <>
-            <div className="char__basics">
+        <motion.div {...motionParams}>
+            <div
+                className="char__basics">
                 <img src={imgStyle}
                     alt={char.name}
                     className="char__basics-img"
@@ -95,7 +97,7 @@ const View = ({ char }) => {
                     : (elemComics())}
 
             </ul>
-        </>
+        </motion.div>
     )
 }
 

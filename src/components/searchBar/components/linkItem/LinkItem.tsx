@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-
 import { Link } from 'react-router-dom';
+
 import { LinkItemProps } from '../../../../types/commonTypes';
 
 const LinkItem: FC<LinkItemProps> = ({isComicsPage, item}) => {

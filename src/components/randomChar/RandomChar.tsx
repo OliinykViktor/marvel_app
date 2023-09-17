@@ -1,5 +1,9 @@
 import React, { useEffect, useState, FC } from 'react';
+import { motion } from 'framer-motion';
+
+import motionListParams from '../../services/motionListParams';
 import useMarvelService from '../../services/MarvelService';
+import getImageStyle from '../../utils/getImageStyle';
 
 import Spinner from '../ui/spinner/Spinner';
 import ErrorMessage from '../ui/errorMessage/ErrorMessage';
@@ -9,7 +13,6 @@ import { Character, ViewRandomProps } from '../../types/commonTypes';
 import './RandomChar.scss';
 
 import Mjolnir from '../../assets/img/mjolnir.png';
-import useImgStyle from '../../hooks/imgStyle';
 
 const RandomChar: FC = () => {
 
@@ -39,8 +42,6 @@ const RandomChar: FC = () => {
             .then(onCharLoaded);
     }
 
-
-
     return (
         <div className="randomchar">
             {errorMessage}
@@ -63,15 +64,15 @@ const RandomChar: FC = () => {
             </div>
         </div>
     );
-
 }
 
 const View: FC<ViewRandomProps> = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki } = char;
-    const imgStyle = useImgStyle(thumbnail);
+    const imgStyle = getImageStyle(thumbnail);
 
     return (
-        <div className="randomchar__block">
+        <motion.div {...motionListParams}
+            className="randomchar__block">
             <img src={imgStyle}
                 alt={name}
                 className="randomchar__img"
@@ -88,7 +89,7 @@ const View: FC<ViewRandomProps> = ({ char }) => {
                     </a>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

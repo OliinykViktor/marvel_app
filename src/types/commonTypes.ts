@@ -1,19 +1,22 @@
 export interface MotionParams {
-  initial: {
+  initial?: {
+    opacity: number;
+    transform: string;
+    transformOrigin?: string;
+  };
+  animate?: {
+    opacity: number;
+    transform: string;
+    transition?: {
+      duration: number;
+    };
+  };
+  exit?: {
     opacity: number;
     transform: string;
     transformOrigin: string;
   };
-  animate: {
-    opacity: number;
-    transform: string;
-  };
-  exit: {
-    opacity: number;
-    transform: string;
-    transformOrigin: string;
-  };
-  transition: {
+  transition?: {
     duration: number;
   };
 }
@@ -77,14 +80,6 @@ export type ViewRandomProps = {
   char: Character;
 };
 
-export interface ListState<T> {
-  itemList: T[];
-  newItemsLoading: boolean;
-  offset: number;
-  listEnded: boolean;
-  classActive: string;
-}
-
 export interface ListProps<T> {
   onSelectedChar?: (charId: number) => void;
 }
@@ -101,4 +96,14 @@ export interface LinkItemProps {
 export interface MetadataProps {
   title: string;
   content: string;
+}
+
+export interface ListData<T> {
+  itemList: T[];
+  newItemsLoading: boolean;
+  offset: number;
+  listEnded: boolean;
+  onRequest: (offset: number, initial: boolean) => void;
+  loading: boolean;
+  error: any;
 }
