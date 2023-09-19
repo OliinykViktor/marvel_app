@@ -1,29 +1,27 @@
-import React, { useEffect, useState, FC, ChangeEvent } from 'react';
+import React, { useEffect, useState, useMemo, FC, ChangeEvent } from 'react';
 
-import LinkItem from './components/linkItem/LinkItem';
+import ElementList from './components/elementList/ElementList';
 
 import useMarvelService from '../../services/MarvelService';
+import useInputValidation from '../../hooks/InputValidation';
 
 import { FaSearch } from 'react-icons/fa';
 
-import { SearchBarProps, SettingReg, ListItem } from '../../types/commonTypes'
+import { SearchBarProps, ListItem } from '../../types/commonTypes'
 
 import './SearchBar.scss';
 
 const SearchBar: FC<SearchBarProps> = ({ pathname }) => {
+
+    const offset: number = 0;
+    const limit: number = 100;
+    const isComicsPage = pathname.includes("comics");
+    const searchPlaceholder = `type to search ${isComicsPage ? 'comic' : 'character'}...`;
+
     const [state, setState] = useState<ListItem[]>([]);
     const [text, setText] = useState<string>('');
-    const [settingReg, setSettingReg] = useState<SettingReg>({
-        offset: 0,
-        limit: 100
-    });
-
-    const { offset, limit } = settingReg;
     const { getAllCharacters, getAllComics } = useMarvelService();
-
-    const isComicsPage = pathname.includes("comics");
-
-    const searchPlaceholder = `type to search ${isComicsPage ? 'comic' : 'character'}...`;
+    const { error, handleChange } = useInputValidation('');
 
     useEffect(() => {
         onReguest(offset, limit);
@@ -39,45 +37,32 @@ const SearchBar: FC<SearchBarProps> = ({ pathname }) => {
                 .then(setState)
         }
     };
+    console.log('re');
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setText(e.target.value)
     };
 
-    const filteredItems = (): ListItem[] => {
+    const filteredItems = useMemo((): ListItem[] => {
         return state.filter((item: ListItem) => {
             return item.name && item.name.toLowerCase().includes(text.toLowerCase());
         });
-    };
-
-    const ElementList: FC = () => {
-        const maxItemsToShow = 3;
-        const itemsToDisplay: ListItem[] = filteredItems().slice(0, maxItemsToShow);
-
-
-        const lists = itemsToDisplay.map((item) => (
-            <li key={item.id}>
-                <LinkItem isComicsPage={isComicsPage} item={item} />
-            </li>
-        ));
-
-        return (
-            <ul className="search__preview">
-                {lists}
-            </ul>
-        )
-    }
+    }, [text])
 
     return (
         <div className='search__bar'>
             <input
-                onChange={onChange}
+                onChange={(e) => {
+                    onChange(e),
+                        handleChange(e)
+                }}
                 name='search'
                 type="text"
                 placeholder={searchPlaceholder}
                 className='search__input' />
             <FaSearch className='search__icon' />
-            {text ? <ElementList /> : null}
+            {text ? <ElementList filteredItems={filteredItems} error={error} isComicsPage={isComicsPage} /> : null}
         </div>
     );
 };

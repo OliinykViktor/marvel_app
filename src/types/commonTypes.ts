@@ -66,11 +66,6 @@ export interface SearchBarProps {
   pathname: string;
 }
 
-export interface SettingReg {
-  offset: number;
-  limit: number;
-}
-
 export interface ListItem {
   id: number;
   name: string;
@@ -106,4 +101,10 @@ export interface ListData<T> {
   onRequest: (offset: number, initial: boolean) => void;
   loading: boolean;
   error: any;
+}
+
+export interface ElementListProps {
+  error: null | string;
+  isComicsPage: boolean;
+  filteredItems: ListItem[];
 }

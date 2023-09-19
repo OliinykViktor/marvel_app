@@ -46,7 +46,7 @@ const AppHeader: FC = () => {
                 </div>
             </header>
             <main>
-                <Suspense fallback={<Spinner />}>
+                <Suspense fallback={<Spinner/>}>
                     <Outlet />
                 </Suspense>
             </main>
